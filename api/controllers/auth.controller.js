@@ -60,7 +60,13 @@ const login = asyncHandler(async (req, res) => {
             throw new Error("Email or password is not correct!");
         }
 
-        //3.Tạo mã thông báo JWT
+        //3. Check role and isActive
+        if ((existingUser.role !== 'admin' && existingUser.role !== 'manager') || existingUser.isActive !== true) {
+            res.status(403);
+            throw new Error("Bạn chưa được xác nhận tài khoản.");
+        }
+
+        //4.Tạo mã thông báo JWT
         const jwtPayload = {
             email: existingUser.email,
             id: existingUser.id,
