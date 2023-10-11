@@ -12,6 +12,7 @@ export default {
       },
       backgroundImage: {
         'home': "url('./src/assets/home-bg.png')",
+        'restaurant': "url('./src/assets/restaurant-bg.png')",
       }
     },
   },

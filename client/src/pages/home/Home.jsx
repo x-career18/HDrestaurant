@@ -2,7 +2,7 @@ import "./home.css";
 
 const Home = () => {
   return (
-    <div className="WelcomeText bg-home bg-center bg-cover h-screen flex flex-col items-center">
+    <div className="WelcomeText bg-home bg-center bg-contain h-screen flex flex-col items-center">
       <div className="Grid flex-col items-center inline-flex mt-52 mb-6">
         <div className="ThePureTasteOf text-amber-200 text-6xl font-normal font-waterBrush">
           The pure taste of
