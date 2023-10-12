@@ -2,10 +2,11 @@ import jwt from 'jsonwebtoken';
 import UserModel from '../models/user.model.js';
 import asyncHandler from 'express-async-handler';
 import bcrypt from 'bcrypt';
+import { ROLE_LIST } from '../constant.js';
 
 // Đăng ký người dùng (chỉ cho quản lý)
 const register = asyncHandler(async (req, res) => {
-    const { fullname, email, password, phonenumber } = req.body;
+    const { fullname, email, password, phonenumber, idRestaurant } = req.body;
     //1.Validation
     if (!fullname || !email || !password || !phonenumber) {
         return res.status(400).json({ message: 'Vui lòng nhập đầy đủ thông tin.' });
@@ -23,8 +24,8 @@ const register = asyncHandler(async (req, res) => {
 
         //3. Create new user
 
-        // Đăng ký chỉ cho vai trò 'quản lý'
-        const role = 'manager';
+        // Determine role and create new user accordingly
+        const role = idRestaurant ? ROLE_LIST.EMPLOYEE : ROLE_LIST.MANAGER;
 
         const newUser = new UserModel({
             fullname,
@@ -33,6 +34,7 @@ const register = asyncHandler(async (req, res) => {
             role,
             phonenumber,
             isActive: false,
+            idRestaurant,
         });
 
         const savedUser = await newUser.save();
@@ -60,10 +62,17 @@ const login = asyncHandler(async (req, res) => {
             throw new Error("Email or password is not correct!");
         }
 
-        //3. Check role and isActive
-        if ((existingUser.role !== 'admin' && existingUser.role !== 'manager') || existingUser.isActive !== true) {
+        // 3. Check role and isActive
+        let role = ROLE_LIST.MANAGER;  // Mặc định là quản lý
+        if (existingUser.idRestaurant === 'true') {
+            role = ROLE_LIST.EMPLOYEE;
+        } else if (existingUser.role === ROLE_LIST.ADMIN) {
+            role = ROLE_LIST.ADMIN;
+        }
+
+        if ((role !== ROLE_LIST.ADMIN && role !== ROLE_LIST.MANAGER && role !== ROLE_LIST.EMPLOYEE) || existingUser.isActive !== true) {
             res.status(403);
-            throw new Error("Bạn chưa được xác nhận tài khoản.");
+            throw new Error("Tài khoản của bạn chưa được xác nhận.");
         }
 
         //4.Tạo mã thông báo JWT
@@ -71,6 +80,7 @@ const login = asyncHandler(async (req, res) => {
             email: existingUser.email,
             id: existingUser.id,
             fullname: existingUser.fullname,
+            role,
         };
         const token = jwt.sign(jwtPayload, process.env.SECRET_KEY, {
             expiresIn: "1d",
@@ -97,35 +107,10 @@ const getMe = asyncHandler(async (req, res) => {
     }
 });
 
-// Xác nhận tài khoản người dùng (chỉ cho admin)
-const confirm = asyncHandler(async (req, res) => {
-    const { userId } = req.params;
-    const { role } = req.user;
-    try {
-        // Kiểm tra xem người dùng có vai trò là admin hay không
-        if (role !== 'admin') {
-            return res.status(403).json({ message: 'Bạn không có quyền xác nhận tài khoản.' });
-        }
-
-        const user = await UserModel.findById(userId);
-        if (!user) {
-            return res.status(404).json({ message: 'Người dùng không tồn tại.' });
-        }
-
-        user.isActive = true;
-        await user.save();
-
-        res.status(200).json({ message: 'Xác nhận tài khoản thành công.' });
-    } catch (error) {
-        res.status(400).json({ message: error.message });
-    }
-});
-
 const AuthController = {
     register,
     login,
     getMe,
-    confirm,
 };
 
 export default AuthController;

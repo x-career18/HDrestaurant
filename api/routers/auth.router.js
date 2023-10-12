@@ -4,7 +4,6 @@ import { registerValidation } from '../validations/register.validation.js';
 import AuthController from '../controllers/auth.controller.js';
 import { authMiddleware } from '../middlewares/auth.middleware.js';
 import { validationMdw } from '../middlewares/validate.middleware.js';
-import { authenticateToken } from '../middlewares/auth.middleware.js';
 
 const router = express.Router();
 
@@ -17,6 +16,4 @@ router.post('/login', validationMdw(loginValidation), AuthController.login);
 // Lấy thông tin người dùng (me) - yêu cầu xác thực token
 router.get('/me', authMiddleware, AuthController.getMe);
 
-// Xác nhận tài khoản người dùng (chỉ cho admin)
-router.patch('/confirm/:userId', authenticateToken, AuthController.confirm);
 export default router;

@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import { ROLE_LIST } from '../constant.js';
 
 const UserSchema = new mongoose.Schema({
     fullname: {
@@ -16,8 +17,8 @@ const UserSchema = new mongoose.Schema({
     },
     role: {
         type: String,
-        enum: ['admin', 'manager', 'employee'],
-        default: 'employee',
+        enum: [ROLE_LIST.ADMIN, ROLE_LIST.MANAGER, ROLE_LIST.EMPLOYEE],
+        default: ROLE_LIST.EMPLOYEE,
     },
     phonenumber: {
         type: String,
@@ -26,6 +27,9 @@ const UserSchema = new mongoose.Schema({
     isActive: {
         type: Boolean,
         default: false,
+    },
+    idRestaurant: {
+        type: String,
     },
 }, { timestamps: true });
 

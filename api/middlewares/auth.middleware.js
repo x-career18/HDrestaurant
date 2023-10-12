@@ -28,18 +28,3 @@ export const authMiddleware = (req, res, next) => {
     }
 };
 
-export const authenticateToken = (req, res, next) => {
-    const token = req.headers["token"];
-
-    if (!token) {
-        return res.status(401).json({ message: 'Token không tồn tại.' });
-    }
-
-    jwt.verify(token, process.env.SECRET_KEY, (error, user) => {
-        if (error) {
-            return res.status(403).json({ message: 'Token không hợp lệ.' });
-        }
-        req.user = user; // Lưu thông tin người dùng vào req.user
-        next();
-    });
-};
