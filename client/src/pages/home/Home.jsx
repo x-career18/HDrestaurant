@@ -50,7 +50,7 @@ const Home = () => {
         <div className="Inner justify-start items-center gap-0.5 flex">
           <div className="Menu justify-start items-center flex">
             <div className="MenuItem p-4 bg-white rounded-full justify-start items-start gap-2.5 flex">
-              <button className="Restaurant text-zinc-950 text-base font-normal font-beVietnam leading-none">
+              <button onClick={''} className="Restaurant text-zinc-950 text-base font-normal font-beVietnam leading-none">
                 Restaurants
               </button>
             </div>
