@@ -13,6 +13,7 @@ export default {
       backgroundImage: {
         'home': "url('./src/assets/home-bg.png')",
         'restaurant': "url('./src/assets/restaurant-bg.png')",
+        'menu': "url('./src/assets/menu-bg.png')",
         'restEvent-1': "url('./src/assets/rest-event-1.png')",
       },
     },

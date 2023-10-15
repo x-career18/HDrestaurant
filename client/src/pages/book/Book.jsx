@@ -1,10 +1,8 @@
-import { Button } from "antd";
-
 const Book = () => {
   return (
-    <div>
-      <div className="LeftBg w-[865px] fixed left-0 top-0 bg-cover bg-restaurant h-screen items-center z-10">
-        <div className="WelcomeSect mt-60 ml-52 top-0 flex flex-col justify-start items-center">
+    <div className="bg-center bg-contain bg-[#010302]">
+      <div className="LeftContainer w-1/2 fixed left-0 top-0 bg-cover bg-restaurant h-screen items-center z-10">
+        <div className="WelcomeSect mt-60 ml-52 top-0 flex flex-col items-center">
           <div className="text-amber-200 text-6xl font-normal font-waterBrush">
             Check Out
           </div>
@@ -28,75 +26,74 @@ const Book = () => {
                 hover:text-gray-100 
                 transistion duration-200"
             >
-              Book a Table
+              Find a Table
             </button>
           </div>
         </div>
       </div>
-      <div className="RightBg bg-center bg-contain bg-[#010302] h-screen z-0 flex flex-col items-end justify-center">
-        <div className="RightContainer mr-40">
-          <div className="BookForm w-[600px] flex-col gap-12 inline-flex">
-            <div className="flex flex-col gap-4">
-              <div className="text-white text-4xl font-normal font-beVietnam leading-10">
-                Book a table
-              </div>
-              <div className="text-white text-opacity-80 text-lg font-normal font-beVietnam leading-loose">
-                Our dining atmosphere is casual and comfortable. To reflect this
-                environment, we maintain a formal dresscode.
-              </div>
+      <div className="RightContainer h-screen mr-40 flex flex-col items-end justify-center">
+        <div className="BookForm w-[600px] flex-col gap-12 inline-flex">
+          <div className="flex flex-col gap-4">
+            <div className="text-white text-4xl font-normal font-beVietnam leading-10">
+              Book a table
             </div>
-            <div className="h-24 flex-col gap-4 flex">
+            <div className="text-white text-opacity-80 text-lg font-normal font-beVietnam leading-loose">
+              Our dining atmosphere is casual and comfortable. To reflect this
+              environment, we maintain a formal dresscode.
+            </div>
+          </div>
+          <div className="h-24 flex-col gap-4 flex">
+            <p className="text-white text-opacity-80 text-base font-normal font-beVietnam leading-relaxed">
+              Name
+            </p>
+            <div className="h-14 px-6 py-4 rounded-lg border border-white border-opacity-10 inline-flex">
+              <input
+                type="text"
+                placeholder="Name"
+                className="w-full bg-transparent outline-none text-white text-lg font-normal font-beVietnam leading-7"
+              />
+            </div>
+          </div>
+          <div className="h-24 flex-col gap-4 flex">
+            <p className="text-white text-opacity-80 text-base font-normal font-beVietnam leading-relaxed">
+              Number of guests
+            </p>
+            <div className="h-14 px-6 py-4 rounded-lg border border-white border-opacity-10 inline-flex">
+              <input
+                type="number"
+                min="1"
+                max="30"
+                placeholder="1 - 30"
+                className="w-full bg-transparent outline-none text-white text-lg font-normal font-beVietnam leading-7"
+              />
+            </div>
+          </div>
+          <div className="gap-8 inline-flex">
+            <div className="grow shrink basis-0 flex-col justify-start gap-4 inline-flex">
               <p className="text-white text-opacity-80 text-base font-normal font-beVietnam leading-relaxed">
-                Name
+                Date
               </p>
-              <div className="h-14 px-6 py-4 rounded-lg border border-white border-opacity-10 inline-flex">
+              <div className="h-14 px-6 py-4 rounded-lg border border-white border-opacity-10 items-center inline-flex">
                 <input
-                  type="text"
-                  placeholder="Name"
+                  type="date"
                   className="w-full bg-transparent outline-none text-white text-lg font-normal font-beVietnam leading-7"
                 />
               </div>
             </div>
-            <div className="h-24 flex-col gap-4 flex">
+            <div className="grow shrink basis-0 flex-col justify-start items-start gap-4 inline-flex">
               <p className="text-white text-opacity-80 text-base font-normal font-beVietnam leading-relaxed">
-                Number of guests
+                Time
               </p>
-              <div className="h-14 px-6 py-4 rounded-lg border border-white border-opacity-10 inline-flex">
+              <div className="h-14 px-6 py-4 rounded-lg border border-white border-opacity-10 items-center inline-flex">
                 <input
-                  type="number"
-                  min="1"
-                  max="30"
-                  placeholder="1"
+                  type="time"
                   className="w-full bg-transparent outline-none text-white text-lg font-normal font-beVietnam leading-7"
                 />
               </div>
             </div>
-            <div className="gap-8 inline-flex">
-              <div className="grow shrink basis-0 flex-col justify-start gap-4 inline-flex">
-                <p className="text-white text-opacity-80 text-base font-normal font-beVietnam leading-relaxed">
-                  Date
-                </p>
-                <div className="h-14 px-6 py-4 rounded-lg border border-white border-opacity-10 items-center inline-flex">
-                  <input
-                    type="date"
-                    className="w-full bg-transparent outline-none text-white text-lg font-normal font-beVietnam leading-7"
-                  />
-                </div>
-              </div>
-              <div className="grow shrink basis-0 flex-col justify-start items-start gap-4 inline-flex">
-                <p className="text-white text-opacity-80 text-base font-normal font-beVietnam leading-relaxed">
-                  Time
-                </p>
-                <div className="h-14 px-6 py-4 rounded-lg border border-white border-opacity-10 items-center inline-flex">
-                  <input
-                    type="time"
-                    className="w-full bg-transparent outline-none text-white text-lg font-normal font-beVietnam leading-7"
-                  />
-                </div>
-              </div>
-            </div>
-            <button
-              className="h-14 px-6 py-4
+          </div>
+          <button
+            className="h-14 px-6 py-4
             bg-orange-200 rounded-full
               justify-center border-none
               items-center inline-flex 
@@ -106,10 +103,9 @@ const Book = () => {
               hover:bg-orange-300
               hover:text-white
               transistion duration-200"
-            >
-              Book a table
-            </button>
-          </div>
+          >
+            Book now
+          </button>
         </div>
       </div>
     </div>

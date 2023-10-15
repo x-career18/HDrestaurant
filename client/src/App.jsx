@@ -1,5 +1,5 @@
 import Home from './pages/home/Home'
-import Restaurant from './pages/restaurants/Restaurants'
+import Restaurants from './pages/restaurants/Restaurants'
 import Menu from './pages/menu/Menu'
 import Book from './pages/book/Book'
 import Message from './pages/message/Message'
@@ -8,11 +8,11 @@ function App() {
 
   return (
     <>
-      {/* <Home></Home> */}
-      {/* <Restaurant></Restaurant> */}
+      <Home></Home>
+      {/* <Restaurants></Restaurants> */}
       {/* <Menu></Menu> */}
       {/* <Book></Book> */}
-      <Message></Message>
+      {/* <Message></Message> */}
     </>
   )
 }
