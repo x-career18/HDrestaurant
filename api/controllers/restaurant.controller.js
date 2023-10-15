@@ -62,7 +62,7 @@ const updateRestaurant = async (req, res) => {
 
         // Kiểm tra xem có quyền sửa nhà hàng hay không
         if (restaurant.idManager !== req.user.id || !restaurant.isVerified) {
-            return res.status(403).json({ message: 'Bạn không có quyền sửa nhà hàng này.' });
+            return res.status(403).json({ message: 'Bạn không có quyền sửa nhà hàng này hoặc nhà nhà không tồn tại.' });
         }
 
         const updatedRestaurant = await RestaurantModel.findByIdAndUpdate(id, req.body, { new: true });

@@ -3,6 +3,7 @@ import UserModel from '../models/user.model.js';
 import asyncHandler from 'express-async-handler';
 import bcrypt from 'bcrypt';
 import { ROLE_LIST } from '../constant.js';
+import RestaurantModel from '../models/restaurant.model.js';
 
 // Đăng ký người dùng (chỉ cho quản lý)
 const register = asyncHandler(async (req, res) => {
@@ -25,7 +26,18 @@ const register = asyncHandler(async (req, res) => {
         //3. Create new user
 
         // Determine role and create new user accordingly
-        const role = idRestaurant ? ROLE_LIST.EMPLOYEE : ROLE_LIST.MANAGER;
+        let role = ROLE_LIST.MANAGER;
+        
+
+        if (idRestaurant) {
+            const restaurant = await RestaurantModel.findOne({ idRestaurant });
+
+            if (restaurant && restaurant.isVerified) {
+                role = ROLE_LIST.EMPLOYEE;
+            } else {
+                return res.status(400).json({ message: 'Nhà hàng chưa được xác nhận.' });
+            }
+        }
 
         const newUser = new UserModel({
             fullname,
@@ -33,7 +45,7 @@ const register = asyncHandler(async (req, res) => {
             password: hashedPassword,
             role,
             phonenumber,
-            isActive: role === ROLE_LIST.MANAGER ,
+            isActive: role === ROLE_LIST.MANAGER,
             idRestaurant,
         });
 
