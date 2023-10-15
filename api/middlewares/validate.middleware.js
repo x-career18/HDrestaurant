@@ -6,3 +6,4 @@ export const validationMdw = (schema) => async (req, res, next) => {
         res.status(400).json({ message: error.errors.join(", ") });
     }
 };
+

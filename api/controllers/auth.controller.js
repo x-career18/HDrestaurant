@@ -33,7 +33,7 @@ const register = asyncHandler(async (req, res) => {
             password: hashedPassword,
             role,
             phonenumber,
-            isActive: false,
+            isActive: role === ROLE_LIST.MANAGER ,
             idRestaurant,
         });
 
