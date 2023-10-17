@@ -1,7 +1,9 @@
 import { DownOutlined } from "@ant-design/icons";
 import { Dropdown, Space } from "antd";
+import { useNavigate } from "react-router-dom";
 
 const Restaurants = () => {
+  const navigate = useNavigate();
   const items = [
     {
       label: <a href="https://www.antgroup.com">1st menu item</a>,
@@ -36,7 +38,9 @@ const Restaurants = () => {
           </div>
           <div className="Navbar mt-80 h-16 p-2.5 bg-white rounded-full justify-start items-center gap-8 inline-flex">
             <button
-              onClick={""}
+              onClick={() => {
+                navigate("/book");
+              }}
               className="flex
                 px-6 py-4 bg-neutral-900 
                 rounded-full justify-start
@@ -53,29 +57,34 @@ const Restaurants = () => {
         </div>
       </div>
       <div className="RightContainer mr-40 flex flex-col items-end">
-        <div>
+        <div className="ContentContainer flex flex-col gap-10">
           <div className="ContentList w-96 mt-7 flex flex-col items-start gap-5">
             <div className="Location text-white text-xl font-normal font-beVietnam leading-10">
               Location
             </div>
             <Dropdown
-              className="LocationSelect flex w-72 h-12 mb-16 px-7 bg-white rounded-3xl font-beVietnam cursor-pointer"
+              className="LocationSelect flex w-72 h-12 px-7 bg-white rounded-3xl font-beVietnam cursor-pointer"
               menu={{
                 items,
               }}
               trigger={["click"]}
             >
               <a onClick={(e) => e.preventDefault()}>
-                <Space className="inline-flex w-[100%] justify-between">
+                <Space className="inline-flex w-full justify-between">
                   <span>Hanoi</span>
                   <DownOutlined />
                 </Space>
               </a>
             </Dropdown>
           </div>
-          <div className="">
-            <div className="Content w-[600px] gap-2 cursor-pointer">
-              <div className="Row w-full inline-flex items-center gap-8">
+          <div className="flex flex-col gap-8">
+            <div
+              className="Content w-[600px] cursor-pointer"
+              onClick={() => {
+                navigate("/menu");
+              }}
+            >
+              <div className="w-full inline-flex items-center gap-8">
                 <div className="ContentImg">
                   <img
                     className="w-[700px] rounded-lg"

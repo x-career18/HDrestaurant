@@ -1,6 +1,8 @@
 import "./home.css";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
+  const navigate = useNavigate();
   return (
     <div className="WelcomeText bg-home bg-center bg-contain h-screen flex flex-col items-center">
       <div className="flex-col items-center inline-flex mt-52 mb-6">
@@ -50,7 +52,9 @@ const Home = () => {
         <div className="justify-start items-center gap-0.5 flex">
           <div className="justify-start items-center flex">
             <button
-              onClick={""}
+              onClick={() => {
+                navigate("/restaurants");
+              }}
               className="p-4 bg-white 
                 rounded-full justify-start items-start 
                 gap-2.5 flex 
@@ -62,7 +66,9 @@ const Home = () => {
             </button>
           </div>
           <button
-            onClick={""}
+            onClick={() => {
+              navigate("/book");
+            }}
             className="flex px-6 py-4
             bg-neutral-900 
             rounded-full justify-start gap-2.5

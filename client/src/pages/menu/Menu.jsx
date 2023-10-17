@@ -1,6 +1,7 @@
-import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const Menu = () => {
+  const navigate = useNavigate();
   return (
     <div className="bg-center bg-contain bg-[#010302]">
       <div className="LeftContainer w-1/2 fixed left-0 top-0 bg-cover bg-menu h-screen items-center">
@@ -11,9 +12,11 @@ const Menu = () => {
           <div className="text-white text-7xl font-normal font-beVietnam">
             Our Menus
           </div>
-          <div className="Navbar mt-80 h-16 p-2.5 bg-white rounded-full justify-start items-center gap-8 inline-flex">
+          <div className="Navbar mt-[600px] h-16 p-2.5 bg-white rounded-full justify-start items-center gap-8 inline-flex">
             <button
-              onClick={""}
+              onClick={() => {
+                navigate("/restaurants");
+              }}
               className="flex px-6 py-4
                 bg-neutral-900 
                 rounded-full justify-start gap-2.5
@@ -23,7 +26,7 @@ const Menu = () => {
                 hover:text-gray-100 
                 transistion duration-200"
             >
-              Find a Table
+              Browse restaurants
             </button>
           </div>
         </div>

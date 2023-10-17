@@ -1,4 +1,27 @@
+import { useNavigate } from "react-router-dom";
+import { DownOutlined } from "@ant-design/icons";
+import { Dropdown, Space } from "antd";
+
 const Book = () => {
+  const navigate = useNavigate();
+  const items = [
+    {
+      label: <a href="https://www.antgroup.com">1st menu item</a>,
+      key: "0",
+    },
+    {
+      label: <a href="https://www.aliyun.com">2nd menu item</a>,
+      key: "1",
+    },
+    {
+      type: "divider",
+    },
+    {
+      label: "3rd menu item",
+      key: "3",
+    },
+  ];
+
   return (
     <div className="bg-center bg-contain bg-[#010302]">
       <div className="LeftContainer w-1/2 fixed left-0 top-0 bg-cover bg-restaurant h-screen items-center z-10">
@@ -15,7 +38,9 @@ const Book = () => {
           </div>
           <div className="Navbar mt-80 h-16 p-2.5 bg-white rounded-full justify-start items-center gap-8 inline-flex">
             <button
-              onClick={""}
+              onClick={() => {
+                navigate("/restaurants");
+              }}
               className="Button flex
                 px-6 py-4 bg-neutral-900 
                 rounded-full justify-start
@@ -26,7 +51,7 @@ const Book = () => {
                 hover:text-gray-100 
                 transistion duration-200"
             >
-              Find a Table
+              Browse restaurants
             </button>
           </div>
         </div>
@@ -41,6 +66,25 @@ const Book = () => {
               Our dining atmosphere is casual and comfortable. To reflect this
               environment, we maintain a formal dresscode.
             </div>
+          </div>
+          <div className="h-24 flex-col gap-4 flex">
+            <p className="text-white text-opacity-80 text-base font-normal font-beVietnam leading-relaxed">
+              Pick a restaurant near you
+            </p>
+            <Dropdown
+              className="LocationSelect flex w-full h-12 px-7 bg-white rounded-3xl font-beVietnam cursor-pointer"
+              menu={{
+                items,
+              }}
+              trigger={["click"]}
+            >
+              <a onClick={(e) => e.preventDefault()}>
+                <Space className="inline-flex w-full justify-between">
+                  <span>Hanoi</span>
+                  <DownOutlined />
+                </Space>
+              </a>
+            </Dropdown>
           </div>
           <div className="h-24 flex-col gap-4 flex">
             <p className="text-white text-opacity-80 text-base font-normal font-beVietnam leading-relaxed">
@@ -93,6 +137,7 @@ const Book = () => {
             </div>
           </div>
           <button
+          onClick={()=>{navigate("/message")}}
             className="h-14 px-6 py-4
             bg-orange-200 rounded-full
               justify-center border-none
