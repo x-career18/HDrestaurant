@@ -1,24 +1,35 @@
 import "./home.css";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const Home = () => {
   const navigate = useNavigate();
+  const [isHovered, setIsHovered] = useState(false);
+
+  const handleBtnHover = () => setIsHovered(true);
+  const handleBtnLeave = () => setIsHovered(false);
+
   return (
-    <div className="WelcomeText bg-home bg-center bg-contain h-screen flex flex-col items-center">
-      <div className="flex-col items-center inline-flex mt-52 mb-6">
-        <div className="text-amber-200 text-6xl font-normal font-waterBrush">
+    <div className="WelcomeText bg-home bg-center bg-cover h-screen flex flex-col items-center">
+      <div className="flex-col items-center inline-flex mt-48 mb-6">
+        <div className="text-amber-200 text-4xl sm:text-5xl md:text-6xl font-normal font-waterBrush">
           The pure taste of
         </div>
-        <div className="text-white text-9xl font-normal font-beVietnam">
+
+        <div className="text-white text-7xl sm:text-8xl md:text-9xl font-normal font-beVietnam">
           Viet Nam
         </div>
       </div>
-      <div className="w-[490px] h-auto text-center text-white text-lg font-normal font-beVietnam leading-10 mb-36">
+      <div className="w-96 px-1 md:w-[490px] h-auto text-center text-white text-sm md:text-lg font-normal font-beVietnam leading-10 md:mb-20 lg:mb-36">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
         tempor incididunt ut labore.
       </div>
-      <div className="w-60 h-auto mb-8 px-6 py-4 bg-white rounded-lg flex-col justify-start items-start gap-2 inline-flex">
-        <div className="OpeningHours text-zinc-950 text-base font-normal font-beVietnam leading-7">
+      <div
+        className={`OpeningHours w-60 h-auto mb-8 px-6 py-4 bg-white rounded-lg flex-col justify-start items-start gap-2 inline-flex transition-opacity duration-200 ${
+          isHovered ? "opacity-100" : "opacity-0"
+        }`}
+      >
+        <div className="text-zinc-950 text-base font-normal font-beVietnam leading-7">
           Opening Hours
         </div>
         <div className="self-stretch h-auto flex-col justify-start items-start gap-2 flex">
@@ -55,7 +66,7 @@ const Home = () => {
               onClick={() => {
                 navigate("/restaurants");
               }}
-              className="p-4 bg-white 
+              className="RestaurantBtn p-4 bg-white 
                 rounded-full justify-start items-start 
                 gap-2.5 flex 
                 hover:bg-slate-700 hover:text-gray-100 
@@ -69,7 +80,9 @@ const Home = () => {
             onClick={() => {
               navigate("/book");
             }}
-            className="flex px-6 py-4
+            onMouseEnter={handleBtnHover}
+            onMouseLeave={handleBtnLeave}
+            className="BookBtn flex px-6 py-4
             bg-neutral-900 
             rounded-full justify-start gap-2.5
             text-white text-sm font-normal font-beVietnam 
@@ -78,7 +91,7 @@ const Home = () => {
             hover:text-gray-100 
             transistion duration-200"
           >
-            <div className="BookATable text-white text-sm font-normal font-beVietnam uppercase leading-none tracking-wide">
+            <div className="text-white text-sm font-normal font-beVietnam uppercase leading-none tracking-wide">
               Book a Table
             </div>
           </button>
