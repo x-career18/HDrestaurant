@@ -38,7 +38,7 @@ const Message = () => {
         </div>
       </div>
       <div className="RightContainer xl:h-screen xl:mr-8 2xl:mr-40 flex flex-col xl:items-end items-center justify-center">
-        <div className="MsgForm w-[600px] md:max-xl:w-[800px] flex-col gap-12 inline-flex px-32 py-5 lg:py-0 lg:px-0">
+        <form className="MsgForm w-[600px] md:max-xl:w-[800px] flex-col gap-12 inline-flex px-32 py-5 lg:py-0 lg:px-0">
           <div className="flex flex-col gap-4">
             <div className="text-white text-opacity-80 text-lg font-normal font-beVietnam leading-loose">
               Volutpat maecenas volutpat blandit aliquam etiam erat velit
@@ -95,7 +95,7 @@ const Message = () => {
           >
             Book now
           </button>
-        </div>
+        </form>
       </div>
     </div>
   );
