@@ -31,6 +31,10 @@ const UserSchema = new mongoose.Schema({
     idRestaurant: {
         type: String,
     },
+    employeeCode: {
+        type: String,
+        unique: true,
+    },
 }, { timestamps: true });
 
 const UserModel = mongoose.model('User', UserSchema);

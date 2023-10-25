@@ -1,5 +1,4 @@
 import jwt from "jsonwebtoken";
-import RestaurantModel from '../models/restaurant.model.js';
 
 export const authMiddleware = (req, res, next) => {
     const token = req.headers["token"];

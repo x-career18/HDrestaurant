@@ -4,6 +4,7 @@ import asyncHandler from 'express-async-handler';
 import bcrypt from 'bcrypt';
 import { ROLE_LIST } from '../constant.js';
 import RestaurantModel from '../models/restaurant.model.js';
+import GenerateEmployeeCode from '../utils/genrateEmployee.js';
 
 // Đăng ký người dùng (chỉ cho quản lý)
 const register = asyncHandler(async (req, res) => {
@@ -27,6 +28,7 @@ const register = asyncHandler(async (req, res) => {
 
         // Determine role and create new user accordingly
         let role = ROLE_LIST.MANAGER;
+        let employeeCode;
         
 
         if (idRestaurant) {
@@ -34,6 +36,7 @@ const register = asyncHandler(async (req, res) => {
 
             if (restaurant && restaurant.isVerified) {
                 role = ROLE_LIST.EMPLOYEE;
+                employeeCode = GenerateEmployeeCode();
             } else {
                 return res.status(400).json({ message: 'Nhà hàng chưa được xác nhận.' });
             }
@@ -47,6 +50,7 @@ const register = asyncHandler(async (req, res) => {
             phonenumber,
             isActive: role === ROLE_LIST.MANAGER,
             idRestaurant,
+            employeeCode,
         });
 
         const savedUser = await newUser.save();
