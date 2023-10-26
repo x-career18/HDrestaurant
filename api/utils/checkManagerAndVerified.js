@@ -1,6 +1,6 @@
 import UserModel from '../models/user.model.js';
 import RestaurantModel from '../models/restaurant.model.js';
-import { ROLE_LIST } from '../constant.js';
+import { ROLE_LIST } from '../constants.js';
 
 async function checkManagerAndIsVerified(userId) {
     try {
