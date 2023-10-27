@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken';
 import UserModel from '../models/user.model.js';
 import asyncHandler from 'express-async-handler';
 import bcrypt from 'bcrypt';
-import { ROLE_LIST } from '../constant.js';
+import { ROLE_LIST } from '../constants.js';
 import RestaurantModel from '../models/restaurant.model.js';
 import GenerateEmployeeCode from '../utils/genrateEmployee.js';
 

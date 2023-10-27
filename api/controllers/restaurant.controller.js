@@ -1,17 +1,39 @@
 import RestaurantModel from '../models/restaurant.model.js';
 import UserModel from '../models/user.model.js';
-import { ROLE_LIST } from '../constant.js';
+import { ROLE_LIST } from '../constants.js';
 import { v4 as uuidv4 } from 'uuid';
 
 const getRestaurant = async (req, res) => {
     try {
-        const restaurant = await RestaurantModel.find();
-        res.json(restaurant);
+        const restaurants = await RestaurantModel.find();
+
+        const verifiedRestaurants = restaurants.filter((restaurant) => {
+            return restaurant.idManager === req.user.id && restaurant.isVerified;
+        });
+
+        res.json(verifiedRestaurants);
     } catch (error) {
-        res.status(404).json({ message: error.message });
+        res.status(400).json({ message: error.message });
     }
 };
 
+const getRestaurantById = async (req, res) => {
+    try {
+        const restaurant = await RestaurantModel.findById(req.params.id);
+        if (!restaurant) {
+            return res.status(404).json({ message: 'Không tìm thấy nhà hàng.' });
+        }
+        if (restaurant.idManager !== req.user.id) {
+            return res.status(403).json({ message: 'Bạn không có quyền xóa nhà hàng này.' });
+        }
+        if (!restaurant.isVerified) {
+            return res.status(403).json({ message: 'Nhà hàng chưa được xác minh.' });
+        }
+        res.json(restaurant);
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+};
 const createRestaurant = async (req, res) => {
     const { name, address, image, openingHours, closingHours, description } = req.body;
     //1.Validation
@@ -91,6 +113,7 @@ const deleteRestaurant = async (req, res) => {
 
 const RestaurantController = {
     getRestaurant,
+    getRestaurantById,
     createRestaurant,
     updateRestaurant,
     deleteRestaurant,

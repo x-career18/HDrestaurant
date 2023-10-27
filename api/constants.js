@@ -4,10 +4,10 @@ export const ROLE_LIST = {
     EMPLOYEE: 'employee'
 }
 const STATUS_ACTIVE = "active";
-const STATUS_INACTIVE = "inactive";
-const STATUS_DELETED = "deleted";
-export const status = {
+const STATUS_PENDING = "pending";
+const STATUS_CANCELLED = "cancelled";
+export const Status = {
     ACTIVE: STATUS_ACTIVE,
-    INACTIVE: STATUS_INACTIVE,
-    DELETED: STATUS_DELETED,
+    PENDING: STATUS_PENDING,
+    CANCELLED: STATUS_CANCELLED,
 }

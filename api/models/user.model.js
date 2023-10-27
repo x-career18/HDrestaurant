@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { ROLE_LIST } from '../constant.js';
+import { ROLE_LIST } from '../constants.js';
 
 const UserSchema = new mongoose.Schema({
     fullname: {
