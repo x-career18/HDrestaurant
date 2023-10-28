@@ -1,6 +1,19 @@
-import React from "react";
+import { useContext, useState } from "react";
+import { login } from "../../context/authContext/apiCalls";
+import { AuthContext } from "../../context/authContext/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const { isFetching, dispatch } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+    login({ email, password }, dispatch);
+  };
+
   return (
     <div className="bg-white flex items-center justify-center h-screen">
       <form className="w-96 flex flex-col gap-10 items-center">
@@ -16,8 +29,10 @@ const Login = () => {
             <div className="w-96 inline-flex">
               <div className="w-96 h-12 bg-zinc-100 rounded-lg py-2 px-3">
                 <input
+                  type="text"
                   placeholder="Enter your email"
                   className="w-full h-full bg-transparent outline-none text-neutral-600 text-sm font-normal font-poppins"
+                  onChange={(e) => setEmail(e.target.value)}
                 />
               </div>
               <div className="w-12 h-12">
@@ -38,8 +53,10 @@ const Login = () => {
             <div className="w-96 inline-flex">
               <div className="w-96 h-12 bg-zinc-100 rounded-lg py-2 px-3">
                 <input
+                  type="password"
                   placeholder="Enter your password"
                   className="w-full h-full bg-transparent outline-none text-neutral-600 text-sm font-normal font-poppins"
+                  onChange={(e) => setPassword(e.target.value)}
                 />
               </div>
               <div className="w-12 h-12">
@@ -58,7 +75,11 @@ const Login = () => {
           </div>
         </section>
         <section className="flex flex-col gap-8">
-          <button className="w-96 h-12 bg-violet-500 rounded-lg hover:shadow-lg transistion duration-300">
+          <button
+            className="w-96 h-12 bg-violet-500 rounded-lg hover:shadow-lg transistion duration-300"
+            onClick={handleLogin}
+            disabled={isFetching}
+          >
             <span className="text-center text-white text-base font-semibold font-poppins">
               Login
             </span>
@@ -70,7 +91,10 @@ const Login = () => {
             </span>
             <div className="w-48 h-px border border-stone-300" />
           </div>
-          <button className="w-96 h-12 rounded-lg border border-indigo-900">
+          <button
+            className="w-96 h-12 rounded-lg border border-indigo-900"
+            onClick={() => navigate("/register")}
+          >
             <span className="text-center text-indigo-900 text-base font-semibold font-poppins">
               Sign up now
             </span>
