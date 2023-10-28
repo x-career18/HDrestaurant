@@ -5,7 +5,7 @@ import {jwtDecode} from "jwt-decode"
 export const login = async (user, dispatch) => {
   dispatch(loginStart);
   try {
-    const res = await axios.post("http://localhost:5000/api/v1/auth/login", user);
+    const res = await axios.post("api/v1/auth/login", user);
     console.log(res.data)
       if (res.data.accessToken) {
         const decodedToken = jwtDecode(res.data.accessToken)
