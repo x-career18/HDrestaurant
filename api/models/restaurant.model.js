@@ -37,6 +37,10 @@ const RestaurantSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    locationCode: {
+        type: String,
+        ref: 'Location',
+    },
 }, { timestamps: true });
 
 
