@@ -35,9 +35,9 @@ const getRestaurantById = async (req, res) => {
     }
 };
 const createRestaurant = async (req, res) => {
-    const { name, address, image, openingHours, closingHours, description } = req.body;
+    const { name, address, image, openingHours, closingHours, description, locationCode } = req.body;
     //1.Validation
-    if (!name || !address || !image || !openingHours || !closingHours || !description) {
+    if (!name || !address || !image || !openingHours || !closingHours || !description || !locationCode) {
         return res.status(400).json({ message: 'Vui lòng nhập đầy đủ thông tin.' });
     }
 
@@ -67,6 +67,7 @@ const createRestaurant = async (req, res) => {
             isVerified: false,
             idRestaurant,
             idManager,
+            locationCode,
         });
 
         const savedRestaurant = await newRestaurant.save();
