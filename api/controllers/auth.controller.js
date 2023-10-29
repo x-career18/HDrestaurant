@@ -80,7 +80,7 @@ const login = asyncHandler(async (req, res) => {
 
         // 3. Check role and isActive
         let role = ROLE_LIST.MANAGER;  // Mặc định là quản lý
-        if (existingUser.idRestaurant === 'true') {
+        if (existingUser.idRestaurant) {
             role = ROLE_LIST.EMPLOYEE;
         } else if (existingUser.role === ROLE_LIST.ADMIN) {
             role = ROLE_LIST.ADMIN;
