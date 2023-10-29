@@ -1,6 +1,19 @@
-import React from "react";
+import { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
+  const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [password, setPassword] = useState("");
+  const [code, setCode] = useState("");
+  const navigate = useNavigate();
+
+  const handleRegister = (e) => {
+    e.preventDefault();
+    navigate("/")
+  };
+
   return (
     <div className="flex items-center justify-center py-5">
       <form className="w-96 flex flex-col gap-10 items-center">
@@ -16,8 +29,10 @@ const Register = () => {
             <div className="w-96 inline-flex">
               <div className="w-96 h-12 bg-zinc-100 rounded-lg py-2 px-3">
                 <input
+                  type="text"
                   placeholder="Enter your email"
                   className="w-full h-full bg-transparent outline-none text-neutral-600 text-sm font-normal font-poppins"
+                  onChange={(e) => setEmail(e.target.value)}
                 />
               </div>
               <div className="w-12 h-12">
@@ -38,8 +53,10 @@ const Register = () => {
             <div className="w-96 inline-flex">
               <div className="w-96 h-12 bg-zinc-100 rounded-lg py-2 px-3">
                 <input
+                  type="text"
                   placeholder="Enter your name"
                   className="w-full h-full bg-transparent outline-none text-neutral-600 text-sm font-normal font-poppins"
+                  onChange={(e) => setName(e.target.value)}
                 />
               </div>
             </div>
@@ -51,8 +68,10 @@ const Register = () => {
             <div className="w-96 inline-flex">
               <div className="w-96 h-12 bg-zinc-100 rounded-lg py-2 px-3">
                 <input
+                  type="number"
                   placeholder="Enter your phone number"
                   className="w-full h-full bg-transparent outline-none text-neutral-600 text-sm font-normal font-poppins"
+                  onChange={(e) => setPhoneNumber(e.target.value)}
                 />
               </div>
             </div>
@@ -64,8 +83,10 @@ const Register = () => {
             <div className="w-96 inline-flex">
               <div className="w-96 h-12 bg-zinc-100 rounded-lg py-2 px-3">
                 <input
+                  type="password"
                   placeholder="Enter your password"
                   className="w-full h-full bg-transparent outline-none text-neutral-600 text-sm font-normal font-poppins"
+                  onChange={(e) => setPassword(e.target.value)}
                 />
               </div>
               <div className="w-12 h-12">
@@ -86,8 +107,10 @@ const Register = () => {
             <div className="w-96 inline-flex mb-3">
               <div className="w-96 h-12 bg-zinc-100 rounded-lg py-2 px-3">
                 <input
+                  type="text"
                   placeholder="Enter your restaurant code"
                   className="w-full h-full bg-transparent outline-none text-neutral-600 text-sm font-normal font-poppins"
+                  onChange={(e) => setCode(e.target.value)}
                 />
               </div>
               <div className="w-12 h-12">
@@ -122,7 +145,10 @@ const Register = () => {
           </div>
         </section>
 
-        <button className="w-44 h-12 self-start bg-violet-500 rounded-lg hover:shadow-lg transistion duration-300">
+        <button
+          className="w-44 h-12 self-start bg-violet-500 rounded-lg hover:shadow-lg transistion duration-300"
+          onClick={handleRegister}
+        >
           <span className="text-center text-white text-base font-semibold font-poppins">
             Sign up
           </span>

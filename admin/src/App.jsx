@@ -29,7 +29,7 @@ function App() {
           <Route path="/" element={<HomeEmployee />} />
         )}
         <Route path="*" element={<NotFound />} />
-        <Route path="/register" element={<Register />} />
+        {!user && <Route path="/register" element={<Register />} />}
       </Routes>
     </Router>
   );

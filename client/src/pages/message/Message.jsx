@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 
 const Message = () => {
   const navigate = useNavigate();
+  
 
   return (
     <div className="bg-center bg-contain bg-[#010302]">
