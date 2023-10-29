@@ -6,29 +6,16 @@ import { v4 as uuidv4 } from 'uuid';
 const getRestaurant = async (req, res) => {
     try {
         const restaurants = await RestaurantModel.find();
-
-        const verifiedRestaurants = restaurants.filter((restaurant) => {
-            return restaurant.idManager === req.user.id && restaurant.isVerified;
-        });
-
-        res.json(verifiedRestaurants);
+        res.json(restaurants);
     } catch (error) {
         res.status(400).json({ message: error.message });
     }
 };
 
 const getRestaurantById = async (req, res) => {
+    const { id } = req.params;
     try {
-        const restaurant = await RestaurantModel.findById(req.params.id);
-        if (!restaurant) {
-            return res.status(404).json({ message: 'Không tìm thấy nhà hàng.' });
-        }
-        if (restaurant.idManager !== req.user.id) {
-            return res.status(403).json({ message: 'Bạn không có quyền xóa nhà hàng này.' });
-        }
-        if (!restaurant.isVerified) {
-            return res.status(403).json({ message: 'Nhà hàng chưa được xác minh.' });
-        }
+        const restaurant = await RestaurantModel.findById(id);
         res.json(restaurant);
     } catch (error) {
         res.status(400).json({ message: error.message });
