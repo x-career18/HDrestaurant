@@ -11,3 +11,8 @@ export const Status = {
     PENDING: STATUS_PENDING,
     CANCELLED: STATUS_CANCELLED,
 }
+
+export const PAYMENT_METHOD = {
+    CASH: 'Tiền mặt',
+    BANKTRANSFER: 'Chuyển khoản ngân hàng',
+};
