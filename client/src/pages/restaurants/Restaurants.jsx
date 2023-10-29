@@ -1,6 +1,8 @@
 import { DownOutlined } from "@ant-design/icons";
 import { Dropdown, Space } from "antd";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { fetchAllRestaurants } from "../../services/RestaurantService.jsx";
 
 const Restaurants = () => {
   const navigate = useNavigate();
@@ -21,6 +23,35 @@ const Restaurants = () => {
       key: "3",
     },
   ];
+  const [restaurants, setRestaurants] = useState([]);
+
+  useEffect(() => {
+    getRestaurants();
+  }, []);
+
+  const getRestaurants = async () => {
+    const res = await fetchAllRestaurants();
+    if (res && res.data) {
+      setRestaurants(res.data);
+    }
+  };
+
+  const formatDate = (dateString) => {
+    const options = { month: 'short', day: 'numeric' };
+    const date = new Date(dateString);
+
+    if (isNaN(date)) {
+      return "Invalid Date";
+    }
+
+    return date.toLocaleDateString('en-US', options);
+  }
+  const truncateText = (text) => {
+    if (text.length <= 110) {
+      return text;
+    }
+    return text.slice(0, 110) + '...';
+  }
 
   return (
     <div className="bg-center bg-contain bg-[#010302]">
@@ -80,125 +111,32 @@ const Restaurants = () => {
           <div className="flex flex-col gap-8">
             <div
               className="Content w-full md:w-[600px] cursor-pointer"
-              onClick={() => {
-                navigate("/menu");
-              }}
             >
-              <div className="w-full flex flex-col items-start md:flex-row md:inline-flex md:items-center gap-8">
-                <div className="ContentImg">
-                  <img
-                    className="w-96 md:w-[700px] rounded-lg"
-                    src="./src/assets/rest-event-1.png"
-                    alt="restaurant"
-                  />
-                </div>
-                <div className="Content flex-col justify-start items-start gap-2 inline-flex">
-                  <div className="flex-col justify-start items-start flex">
-                    <div className="text-amber-200 text-base font-normal font-beVietnam leading-relaxed">
-                      September 19, 2022
+              {restaurants.map((restaurant) => (
+                <div key={restaurant?._id} className="w-full flex flex-col items-start md:flex-row md:inline-flex md:items-center gap-8">
+                  <div className="ContentImg">
+                    <img
+                      className="w-96 md:w-[700px] rounded-lg"
+                      alt="restaurant"
+                      src={restaurant?.image}
+                    />
+                  </div>
+                  <div className="Content flex-col justify-start items-start gap-2 inline-flex">
+                    <div className="flex-col justify-start items-start flex">
+                      <div className="text-amber-200 text-base font-normal font-beVietnam leading-relaxed">
+                        {formatDate(restaurant?.createdAt)}
+                      </div>
+                      <div className="text-white text-lg font-normal font-beVietnam leading-10">
+                        <Link to={`/menu/${restaurant?._id}`}>{restaurant?.name}</Link>
+                      </div>
                     </div>
-                    <div className="text-white text-lg font-normal font-beVietnam leading-10">
-                      Gatsby Night
+                    <div title={restaurant?.description} className="ContentText opacity-60 text-white text-base font-normal font-beVietnam leading-relaxed">
+                      {truncateText(restaurant?.description)}
                     </div>
                   </div>
-                  <div className="ContentText self-stretch opacity-60 text-white text-base font-normal font-beVietnam leading-relaxed">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit eo
-                    ut vitae neque sed sed sit sagittis tristique scelerisque.
-                  </div>
                 </div>
-              </div>
+              ))}
             </div>
-            <div
-              className="Content w-full md:w-[600px] cursor-pointer"
-              onClick={() => {
-                navigate("/menu");
-              }}
-            >
-              <div className="w-full flex flex-col items-start md:flex-row md:inline-flex md:items-center gap-8">
-                <div className="ContentImg">
-                  <img
-                    className="w-96 md:w-[700px] rounded-lg"
-                    src="./src/assets/rest-event-1.png"
-                    alt="restaurant"
-                  />
-                </div>
-                <div className="Content flex-col justify-start items-start gap-2 inline-flex">
-                  <div className="flex-col justify-start items-start flex">
-                    <div className="text-amber-200 text-base font-normal font-beVietnam leading-relaxed">
-                      September 19, 2022
-                    </div>
-                    <div className="text-white text-lg font-normal font-beVietnam leading-10">
-                      Gatsby Night
-                    </div>
-                  </div>
-                  <div className="ContentText self-stretch opacity-60 text-white text-base font-normal font-beVietnam leading-relaxed">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit eo
-                    ut vitae neque sed sed sit sagittis tristique scelerisque.
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div
-              className="Content w-full md:w-[600px] cursor-pointer"
-              onClick={() => {
-                navigate("/menu");
-              }}
-            >
-              <div className="w-full flex flex-col items-start md:flex-row md:inline-flex md:items-center gap-8">
-                <div className="ContentImg">
-                  <img
-                    className="w-96 md:w-[700px] rounded-lg"
-                    src="./src/assets/rest-event-1.png"
-                    alt="restaurant"
-                  />
-                </div>
-                <div className="Content flex-col justify-start items-start gap-2 inline-flex">
-                  <div className="flex-col justify-start items-start flex">
-                    <div className="text-amber-200 text-base font-normal font-beVietnam leading-relaxed">
-                      September 19, 2022
-                    </div>
-                    <div className="text-white text-lg font-normal font-beVietnam leading-10">
-                      Gatsby Night
-                    </div>
-                  </div>
-                  <div className="ContentText self-stretch opacity-60 text-white text-base font-normal font-beVietnam leading-relaxed">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit eo
-                    ut vitae neque sed sed sit sagittis tristique scelerisque.
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div
-              className="Content w-full md:w-[600px] cursor-pointer"
-              onClick={() => {
-                navigate("/menu");
-              }}
-            >
-              <div className="w-full flex flex-col items-start md:flex-row md:inline-flex md:items-center gap-8">
-                <div className="ContentImg">
-                  <img
-                    className="w-96 md:w-[700px] rounded-lg"
-                    src="./src/assets/rest-event-1.png"
-                    alt="restaurant"
-                  />
-                </div>
-                <div className="Content flex-col justify-start items-start gap-2 inline-flex">
-                  <div className="flex-col justify-start items-start flex">
-                    <div className="text-amber-200 text-base font-normal font-beVietnam leading-relaxed">
-                      September 19, 2022
-                    </div>
-                    <div className="text-white text-lg font-normal font-beVietnam leading-10">
-                      Gatsby Night
-                    </div>
-                  </div>
-                  <div className="ContentText self-stretch opacity-60 text-white text-base font-normal font-beVietnam leading-relaxed">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit eo
-                    ut vitae neque sed sed sit sagittis tristique scelerisque.
-                  </div>
-                </div>
-              </div>
-            </div>
-
           </div>
         </div>
       </div>
