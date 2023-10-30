@@ -1,17 +1,21 @@
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { UserContext } from "../../context/userContext/UserContext";
+import { register } from "../../context/userContext/apiCalls";
 
 const Register = () => {
   const [email, setEmail] = useState("");
-  const [name, setName] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
+  const [fullname, setFullName] = useState("");
+  const [phonenumber, setPhoneNumber] = useState("");
   const [password, setPassword] = useState("");
   const [code, setCode] = useState("");
+  const { isFetching, dispatch } = useContext(UserContext);
   const navigate = useNavigate();
 
   const handleRegister = (e) => {
     e.preventDefault();
-    navigate("/")
+    register({ email, fullname, phonenumber, password, code }, dispatch);
+    navigate("/");
   };
 
   return (
@@ -56,7 +60,7 @@ const Register = () => {
                   type="text"
                   placeholder="Enter your name"
                   className="w-full h-full bg-transparent outline-none text-neutral-600 text-sm font-normal font-poppins"
-                  onChange={(e) => setName(e.target.value)}
+                  onChange={(e) => setFullName(e.target.value)}
                 />
               </div>
             </div>
@@ -148,6 +152,7 @@ const Register = () => {
         <button
           className="w-44 h-12 self-start bg-violet-500 rounded-lg hover:shadow-lg transistion duration-300"
           onClick={handleRegister}
+          disabled={isFetching}
         >
           <span className="text-center text-white text-base font-semibold font-poppins">
             Sign up
