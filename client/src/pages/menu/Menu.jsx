@@ -30,22 +30,40 @@ const Menu = () => {
             Our Menus
           </div>
           <div className="Navbar mt-96 md:mt-[500px] h-16 p-2.5 bg-white rounded-full justify-start items-center gap-8 inline-flex">
+            <div className="justify-start items-center gap-0.5 flex">
+          <div className="justify-start items-center flex">
             <button
               onClick={() => {
                 navigate("/restaurants");
               }}
-              className="Button flex
-              px-6 py-4 bg-neutral-900 
-              rounded-full justify-start
-              gap-2.5
-              text-white text-sm font-normal font-beVietnam 
-              uppercase leading-none tracking-wide 
-              hover:bg-slate-700
-              hover:text-gray-100 
-              transistion duration-200"
+              className="RestaurantBtn p-4 bg-white 
+                rounded-full justify-start items-start 
+                gap-2.5 flex 
+                hover:bg-slate-700 hover:text-gray-100 
+                transistion duration-200 
+                text-zinc-950 text-base font-normal font-beVietnam leading-none"
             >
-              Browse restaurants
+              Browse Restaurants
             </button>
+          </div>
+          <button
+            onClick={() => {
+              navigate("/book");
+            }}
+            className="BookBtn flex px-6 py-4
+            bg-neutral-900 
+            rounded-full justify-start gap-2.5
+            text-white text-sm font-normal font-beVietnam 
+            uppercase leading-none tracking-wide 
+            hover:bg-slate-700
+            hover:text-gray-100 
+            transistion duration-200"
+          >
+            <div className="text-white text-sm font-normal font-beVietnam uppercase leading-none tracking-wide">
+              Book a Table
+            </div>
+          </button>
+        </div>
           </div>
         </div>
       </div>
