@@ -1,4 +1,4 @@
-import axios from './customizeAxios.jsx'
+import axios from './customizeAxios.jsx';
 
 const fetchAllRestaurants = () => {
     return axios.get('/api/v1/restaurants');

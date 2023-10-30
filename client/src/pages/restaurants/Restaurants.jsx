@@ -6,28 +6,10 @@ import { fetchAllRestaurants } from "../../services/RestaurantService.jsx";
 
 const Restaurants = () => {
   const navigate = useNavigate();
-  const items = [
-    {
-      label: <a href="https://www.antgroup.com">1st menu item</a>,
-      key: "0",
-    },
-    {
-      label: <a href="https://www.aliyun.com">2nd menu item</a>,
-      key: "1",
-    },
-    {
-      type: "divider",
-    },
-    {
-      label: "3rd menu item",
-      key: "3",
-    },
-  ];
+
   const [restaurants, setRestaurants] = useState([]);
 
-  useEffect(() => {
-    getRestaurants();
-  }, []);
+  const [selectedLocationCode, setSelectedLocationCode] = useState(null);
 
   const getRestaurants = async () => {
     const res = await fetchAllRestaurants();
@@ -35,6 +17,11 @@ const Restaurants = () => {
       setRestaurants(res.data);
     }
   };
+
+  useEffect(() => {
+    getRestaurants();
+
+  }, []);
 
   const formatDate = (dateString) => {
     const options = { month: 'short', day: 'numeric' };
@@ -95,14 +82,37 @@ const Restaurants = () => {
             </div>
             <Dropdown
               className="LocationSelect flex w-72 h-12 px-7 bg-white rounded-3xl font-beVietnam cursor-pointer"
-              menu={{
-                items,
-              }}
+              overlay={
+                <div style={{ background: '#FFF', borderRadius: '5px'}}>
+                  {restaurants
+                    .reduce((uniqueRestaurants, restaurant) => {
+                      // Sử dụng mảng duy nhất để lưu trữ các nhà hàng duy nhất dựa trên tên
+                      const isUnique = !uniqueRestaurants.some((unique) => unique.locationName === restaurant.locationName);
+                      if (isUnique) {
+                        uniqueRestaurants.push(restaurant);
+                      }
+                      return uniqueRestaurants;
+                    }, [])
+                    .map((uniqueRestaurant) => (
+                      <div
+                        key={uniqueRestaurant.locationCode}
+                        onClick={() => setSelectedLocationCode(uniqueRestaurant.locationCode)}
+                      >
+                        {uniqueRestaurant.locationName}
+                      </div>
+                    ))
+                  }
+                </div>
+              }
               trigger={["click"]}
             >
               <a onClick={(e) => e.preventDefault()}>
                 <Space className="inline-flex w-full justify-between">
-                  <span>Hanoi</span>
+                  <span>
+                    {selectedLocationCode
+                      ? restaurants.find((restaurant) => restaurant.locationCode === selectedLocationCode).locationName
+                      : "Chọn vị trí"}
+                  </span>
                   <DownOutlined />
                 </Space>
               </a>
@@ -112,7 +122,14 @@ const Restaurants = () => {
             <div
               className="Content w-full md:w-[600px] cursor-pointer"
             >
-              {restaurants.map((restaurant) => (
+              {restaurants.filter((restaurant) => {
+                if (selectedLocationCode) {
+                  // Lọc dựa trên selectedLocationCode
+                  return restaurant.locationCode === selectedLocationCode;
+                } else {
+                  return true; // Hiển thị tất cả nhà hàng nếu không có locationCode được chọn
+                }
+              }).map((restaurant) => (
                 <div key={restaurant?._id} className="w-full flex flex-col items-start md:flex-row md:inline-flex md:items-center gap-8">
                   <div className="ContentImg">
                     <img

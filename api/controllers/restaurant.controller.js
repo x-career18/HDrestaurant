@@ -5,26 +5,33 @@ import { v4 as uuidv4 } from 'uuid';
 
 const getRestaurant = async (req, res) => {
     try {
-        const restaurants = await RestaurantModel.find();
+        const restaurants = await RestaurantModel.find({ isVerified: true });
         res.json(restaurants);
     } catch (error) {
-        res.status(400).json({ message: error.message });
+        res.status(500).json({ message: error.message });
     }
 };
 
 const getRestaurantById = async (req, res) => {
     const { id } = req.params;
     try {
-        const restaurant = await RestaurantModel.findById(id);
+        const restaurant = await RestaurantModel.findOne({ _id: id, isVerified: true });
+
+        if (!restaurant) {
+            res.status(404).json({ message: "Nhà hàng không tồn tại hoặc chưa được xác thực." });
+            return;
+        }
+
         res.json(restaurant);
     } catch (error) {
-        res.status(400).json({ message: error.message });
+        res.status(500).json({ message: error.message });
     }
 };
+
 const createRestaurant = async (req, res) => {
-    const { name, address, image, openingHours, closingHours, description, locationCode } = req.body;
+    const { name, address, image, openingHours, closingHours, description, locationCode, locationName } = req.body;
     //1.Validation
-    if (!name || !address || !image || !openingHours || !closingHours || !description || !locationCode) {
+    if (!name || !address || !image || !openingHours || !closingHours || !description || !locationCode || !locationName) {
         return res.status(400).json({ message: 'Vui lòng nhập đầy đủ thông tin.' });
     }
 
@@ -55,6 +62,7 @@ const createRestaurant = async (req, res) => {
             idRestaurant,
             idManager,
             locationCode,
+            locationName,
         });
 
         const savedRestaurant = await newRestaurant.save();
