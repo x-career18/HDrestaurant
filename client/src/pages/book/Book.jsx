@@ -1,9 +1,11 @@
 import { useNavigate } from "react-router-dom";
 import { DownOutlined } from "@ant-design/icons";
 import { Dropdown, Space } from "antd";
+import { useForm } from "../../context/bookingContext/FormContext.jsx";
 
 const Book = () => {
   const navigate = useNavigate();
+  const { formData, dispatch } = useForm();
   const items = [
     {
       label: <a href="https://www.antgroup.com">1st menu item</a>,
@@ -21,6 +23,21 @@ const Book = () => {
       key: "3",
     },
   ];
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    dispatch({ type: 'update', payload: { [name]: value } });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    // Lưu thông tin vào localStorage
+    localStorage.setItem('formData', JSON.stringify(formData));
+
+    // Chuyển hướng đến trang "Message"
+    navigate("/message");
+  };
 
   return (
     <div className="bg-center bg-cover bg-[#010302]">
@@ -57,7 +74,7 @@ const Book = () => {
         </div>
       </div>
       <div className="RightContainer xl:h-screen xl:mr-8 2xl:mr-40 flex flex-col xl:items-end items-center justify-center">
-        <form className="BookForm w-[600px] md:max-xl:w-[800px] flex-col gap-12 inline-flex px-32 py-5 lg:py-0 lg:px-0">
+        <form onSubmit={handleSubmit} className="BookForm w-[600px] md:max-xl:w-[800px] flex-col gap-12 inline-flex px-32 py-5 lg:py-0 lg:px-0">
           <div className="flex flex-col gap-4">
             <div className="text-white text-4xl font-normal font-beVietnam leading-10">
               Book a table
@@ -94,6 +111,9 @@ const Book = () => {
               <input
                 type="text"
                 placeholder="Name"
+                name="fullName"
+                value={formData.fullName}
+                onChange={handleInputChange}
                 className="w-full bg-transparent outline-none text-white text-lg font-normal font-beVietnam leading-7"
               />
             </div>
@@ -108,6 +128,9 @@ const Book = () => {
                 min="1"
                 max="30"
                 placeholder="1 - 30"
+                name="numberOfPeople"
+                value={formData.numberOfPeople}
+                onChange={handleInputChange}
                 className="w-full bg-transparent outline-none text-white text-lg font-normal font-beVietnam leading-7"
               />
             </div>
@@ -120,6 +143,9 @@ const Book = () => {
               <div className="h-14 pl-2 md:px-6 py-4 rounded-lg border border-white border-opacity-10 items-center inline-flex">
                 <input
                   type="date"
+                  name="bookingDate"
+                  value={formData.bookingDate}
+                  onChange={handleInputChange}
                   className="w-full bg-transparent outline-none text-white text-lg font-normal font-beVietnam leading-7"
                 />
               </div>
@@ -131,15 +157,16 @@ const Book = () => {
               <div className="h-14 pl-2 md:px-6 py-4 rounded-lg border border-white border-opacity-10 items-center inline-flex">
                 <input
                   type="time"
+                  name="bookingTime"
+                  value={formData.bookingTime}
+                  onChange={handleInputChange}
                   className="w-full bg-transparent outline-none text-white text-lg font-normal font-beVietnam leading-7"
                 />
               </div>
             </div>
           </div>
           <button
-            onClick={() => {
-              navigate("/message");
-            }}
+            type="submit"
             className="h-14 px-6 py-4
             bg-orange-200 rounded-full
               justify-center border-none
