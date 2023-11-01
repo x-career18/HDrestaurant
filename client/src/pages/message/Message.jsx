@@ -225,6 +225,7 @@ const Message = () => {
             onClick={() => {
               setIsSuccessModal(false)
               navigate("/")
+              window.location.reload();
             }}
           >
             Đóng
