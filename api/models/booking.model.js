@@ -29,6 +29,11 @@ const BookingSchema = new mongoose.Schema({
     message: {
         type: String,
     },
+    restaurantId:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Restaurant',
+        required: true,
+    },
     status: {
         type: String,
         enum: Status,

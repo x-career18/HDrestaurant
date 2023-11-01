@@ -3,7 +3,7 @@ import BookingModel from "../models/booking.model.js";
 // tạo mới booking
 const createBooking = async (req, res) => {
     try {
-        const { fullName, phoneNumber, bookingDate, bookingTime, numberOfPeople, email, message } = req.body;
+        const { fullName, phoneNumber, bookingDate, bookingTime, numberOfPeople, email, message , restaurantId } = req.body;
 
         const newBooking = new BookingModel({
             fullName,
@@ -13,6 +13,7 @@ const createBooking = async (req, res) => {
             numberOfPeople,
             email,
             message,
+            restaurantId,
         });
 
         const savedBooking = await newBooking.save();
