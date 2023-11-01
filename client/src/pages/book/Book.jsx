@@ -1,33 +1,46 @@
 import { useNavigate } from "react-router-dom";
 import { DownOutlined } from "@ant-design/icons";
-import { Dropdown, Space } from "antd";
+import { Dropdown, Menu, Space } from "antd";
 import { useForm } from "../../context/bookingContext/FormContext.jsx";
+import { useEffect, useState } from "react";
+import { fetchAllRestaurants } from "../../services/RestaurantService.jsx";
 
 const Book = () => {
   const navigate = useNavigate();
   const { formData, dispatch } = useForm();
-  const items = [
-    {
-      label: <a href="https://www.antgroup.com">1st menu item</a>,
-      key: "0",
-    },
-    {
-      label: <a href="https://www.aliyun.com">2nd menu item</a>,
-      key: "1",
-    },
-    {
-      type: "divider",
-    },
-    {
-      label: "3rd menu item",
-      key: "3",
-    },
-  ];
+  const [restaurants, setRestaurants] = useState([]);
+
+  const getRestaurants = async () => {
+    try {
+      const res = await fetchAllRestaurants();
+      if (res && res.data) {
+        setRestaurants(res.data);
+      }
+    } catch (error) {
+      console.error('Lỗi khi lấy dữ liệu nhà hàng:', error);
+    }
+  };
+
+  useEffect(() => {
+    getRestaurants();
+  }, []);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     dispatch({ type: 'update', payload: { [name]: value } });
   };
+
+  const handleRestaurantSelect = ({ key }) => {
+    dispatch({ type: 'update', payload: { restaurantId: key } });
+  };
+
+  const dropdownMenu = (
+    <Menu onClick={handleRestaurantSelect}>
+      {restaurants.map((restaurant) => (
+        <Menu.Item key={restaurant._id}>{restaurant.name}</Menu.Item>
+      ))}
+    </Menu>
+  );
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -70,6 +83,19 @@ const Book = () => {
             >
               Browse restaurants
             </button>
+            <button
+              onClick={() => {
+                navigate("/message");
+              }}
+              className="RestaurantBtn p-4 bg-white 
+                rounded-full justify-start items-start 
+                gap-2.5 flex 
+                hover:bg-slate-700 hover:text-gray-100 
+                transistion duration-200 
+                text-zinc-950 text-base font-normal font-beVietnam leading-none"
+            >
+              Next
+            </button>
           </div>
         </div>
       </div>
@@ -90,14 +116,11 @@ const Book = () => {
             </p>
             <Dropdown
               className="LocationSelect flex w-full h-12 px-7 bg-white rounded-3xl font-beVietnam cursor-pointer"
-              menu={{
-                items,
-              }}
-              trigger={["click"]}
+              overlay={dropdownMenu}
             >
               <a onClick={(e) => e.preventDefault()}>
                 <Space className="inline-flex w-full justify-between">
-                  <span>Hanoi</span>
+                  <span>{formData.restaurantId ? restaurants.find(restaurant => restaurant._id === formData.restaurantId).name : "Select a restaurant"}</span>
                   <DownOutlined />
                 </Space>
               </a>

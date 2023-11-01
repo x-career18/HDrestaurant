@@ -12,6 +12,7 @@ export const FormProvider = ({ children }) => {
         phoneNumber: '',
         email: '',
         message: '',
+        restaurantId: '',
     };
 
     const [formData, dispatch] = useReducer((state, action) => {

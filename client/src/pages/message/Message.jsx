@@ -46,6 +46,7 @@ const Message = () => {
       phoneNumber,
       email,
       message,
+      restaurantId,
     } = formData;
 
     // Tạo đối tượng dữ liệu để gửi lên API
@@ -57,6 +58,7 @@ const Message = () => {
       phoneNumber,
       email,
       message,
+      restaurantId,
     };
 
     try {
@@ -90,6 +92,19 @@ const Message = () => {
             eiusmod tempor incididunt ut labore.
           </div>
           <div className="Navbar mt-20 md:mt-60 h-16 p-2.5 bg-white rounded-full justify-start items-center gap-8 inline-flex">
+            <button
+              onClick={() => {
+                navigate("/book");
+              }}
+              className="RestaurantBtn p-4 bg-white 
+                rounded-full justify-start items-start 
+                gap-2.5 flex 
+                hover:bg-slate-700 hover:text-gray-100 
+                transistion duration-200 
+                text-zinc-950 text-base font-normal font-beVietnam leading-none"
+            >
+              Back
+            </button>
             <button
               onClick={() => {
                 navigate("/restaurants");
@@ -210,6 +225,7 @@ const Message = () => {
             onClick={() => {
               setIsSuccessModal(false)
               navigate("/")
+              window.location.reload();
             }}
           >
             Đóng

@@ -57,6 +57,19 @@ const Restaurants = () => {
           <div className="Navbar mt-20 md:mt-60 h-16 p-2.5 bg-white rounded-full justify-start items-center gap-8 inline-flex">
             <button
               onClick={() => {
+                navigate("/");
+              }}
+              className="RestaurantBtn p-4 bg-white 
+                rounded-full justify-start items-start 
+                gap-2.5 flex 
+                hover:bg-slate-700 hover:text-gray-100 
+                transistion duration-200 
+                text-zinc-950 text-base font-normal font-beVietnam leading-none"
+            >
+              Home
+            </button>
+            <button
+              onClick={() => {
                 navigate("/book");
               }}
               className="Button flex
@@ -83,7 +96,7 @@ const Restaurants = () => {
             <Dropdown
               className="LocationSelect flex w-72 h-12 px-7 bg-white rounded-3xl font-beVietnam cursor-pointer"
               overlay={
-                <div style={{ background: '#FFF', borderRadius: '5px'}}>
+                <div style={{ background: '#FFF', borderRadius: '5px' }}>
                   {restaurants
                     .reduce((uniqueRestaurants, restaurant) => {
                       // Sử dụng mảng duy nhất để lưu trữ các nhà hàng duy nhất dựa trên tên
