@@ -6,13 +6,13 @@ import { authMiddleware } from '../middlewares/auth.middleware.js';
 const router = express.Router();
 
 // Lấy thông tin tất cả nhà hàng
-router.get('/',checkRestaurantExistence, authMiddleware, RestaurantController.getRestaurant);
+router.get('/', RestaurantController.getRestaurant);
+
+// Lấy thông tin nhà hàng theo id
+router.get('/:id', RestaurantController.getRestaurantById);
 
 // Tạo mới nhà hàng
 router.post('/', authMiddleware, RestaurantController.createRestaurant);
-
-// Lấy thông tin nhà hàng theo id
-router.get('/:id', checkRestaurantExistence, authMiddleware, RestaurantController.getRestaurantById);
 
 // Cập nhật nhà hàng
 router.put('/:id', checkRestaurantExistence, authMiddleware, RestaurantController.updateRestaurant);
