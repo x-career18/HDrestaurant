@@ -12,6 +12,16 @@ const getRestaurant = async (req, res) => {
     }
 };
 
+const getAllRestaurant = async (req, res) => {
+    try {
+        const restaurants = await RestaurantModel.find();
+        res.json(restaurants);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+
 const getRestaurantById = async (req, res) => {
     const { id } = req.params;
     try {
@@ -113,6 +123,7 @@ const RestaurantController = {
     createRestaurant,
     updateRestaurant,
     deleteRestaurant,
+    getAllRestaurant,
 };
 
 export default RestaurantController;
