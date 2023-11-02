@@ -4,6 +4,8 @@ import {
   Routes,
   Route,
 } from "react-router-dom";
+import TopBar from "./components/sidebar/TopBar";
+import SideBar from "./components/sidebar/SideBar";
 import HomeAdmin from "./pages/home/HomeAdmin";
 import HomeManager from "./pages/home/HomeManager";
 import HomeEmployee from "./pages/home/HomeEmployee";
@@ -17,20 +19,38 @@ function App() {
   const { user } = useContext(AuthContext);
   return (
     <Router>
-      <Routes>
-        {!user && <Route path="/" element={<Login />} />}
-        {user && user.role === "manager" && (
-          <Route path="/" element={<HomeManager />} />
-        )}
-        {user && user.role === "admin" && (
-          <Route path="/" element={<HomeAdmin />} />
-        )}
-        {user && user.role === "employee" && (
-          <Route path="/" element={<HomeEmployee />} />
-        )}
-        <Route path="*" element={<NotFound />} />
-        {!user && <Route path="/register" element={<Register />} />}
-      </Routes>
+      {!user && (
+        <Routes>
+          <Route path="/" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+        </Routes>
+      )}
+
+      {user && (
+        <>
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <>
+                  <TopBar />
+                  <div className="flex ">
+                    <SideBar />
+                    {user.role === "manager" ? (
+                      <HomeManager />
+                    ) : user.role === "admin" ? (
+                      <HomeAdmin />
+                    ) : (
+                      <HomeEmployee />
+                    )}
+                  </div>
+                </>
+              }
+            />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </>
+      )}
     </Router>
   );
 }

@@ -4,7 +4,9 @@ export default {
   theme: {
     extend: {
       fontFamily: {
+        beVietnam: ["Be Vietnam Pro", "sans-serif"],
         poppins: ["Poppins", "sans-serif"],
+        waterBrush: ["Water Brush", "cursive"],
       },
     },
   },
